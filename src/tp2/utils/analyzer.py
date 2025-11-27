@@ -116,9 +116,14 @@ def get_llm_analysis(strings: List[str], instructions: List[str], api_calls_outp
     formatted_instructions = '\n'.join(instructions_sample) 
     
     prompt_data = f"""
-    En tant qu'analyste en sécurité de haut niveau (niveau SANS), effectuez une analyse Pwn de ce shellcode.
-    Expliquez son but probable, sa technique d'encodage (s'il y en a une), et sa technique d'exploitation probable.
-
+    En tant qu'analyste en sécurité de haut niveau, effectuez une analyse Pwn de ce shellcode.
+    
+    Rédigez un rapport **extrêmement concis** (maximum 4 phrases ou une liste à puces), qui couvre :
+    1. Le type de shellcode (e.g., loader, reverse shell).
+    2. La technique d'encodage probable (e.g., XOR, Metasploit, pas encodé).
+    3. Son objectif final (e.g., télécharger et exécuter un fichier).
+    4. Le type de vulnérabilité d'exploitation le plus probable.
+    
     --- Données d'Analyse ---
     1. Chaînes trouvées: {', '.join(strings)}
     2. Premières instructions désassemblées (via Capstone):
@@ -126,9 +131,9 @@ def get_llm_analysis(strings: List[str], instructions: List[str], api_calls_outp
     ... (Total: {len(instructions)} instructions)
     3. Résultats d'émulation (via Pylibemu - si disponible): {api_calls_output}
 
-    Fournissez votre réponse en français, dans un format clair et structuré.
+    Fournissez votre réponse UNIQUEMENT en français, sans préambule ("Voici l'analyse:") et en utilisant un format facile à lire (liste ou paragraphe court).
     """
-    
+
     # 3. Appel réel à l'API Gemini
     try:
         client = genai.Client(api_key=gemini_api_key)
