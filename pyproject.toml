@@ -17,11 +17,13 @@ scapy = "^2.6.0"
 pygal = "^3.0.5"
 fpdf2 = "^2.8.1"
 pytest = "^8.3.5"
+matplotlib = "^3.10.7"
+fpdf = "^1.7.2"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-tp1 = "tp1.main:main"
-tp3 = "tp3.main:main"
+tp1 = "src.tp1.main:main"
+tp3 = "src.tp3.main:main"
